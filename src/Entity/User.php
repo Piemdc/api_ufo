@@ -62,6 +62,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $evenements;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $avatar;
+
     public function __construct()
     {
         $this->evenements = new ArrayCollection();
@@ -230,6 +235,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $evenement->setCreatorId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }
