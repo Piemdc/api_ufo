@@ -35,6 +35,7 @@ class ConnexionController extends AbstractController
         $newPassword = $user->getPassword();
         $user->setCreatedAt(new \DateTimeImmutable());
         $user->setRoles(["ROLE_USER"]);
+        $user->setAvatar("1.png");
         $user->setPassword($this->passwordEncoder->encodePassword($user, $newPassword));
         $em->persist($user);
         $em->flush();
@@ -48,6 +49,8 @@ class ConnexionController extends AbstractController
     #[Route('/api/login', name: 'api_login', methods: ["POST", "GET"])]
     public function login(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+
+
         return $this->json(
             [
                 'user' => $this->getUser()->getId()
