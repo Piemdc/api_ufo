@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -40,7 +41,7 @@ class ConnexionController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json(['Utilisateur inscrit'], 200, []);
+        return new JsonResponse(['Compte Créé'], 200, []);
     }
 
 

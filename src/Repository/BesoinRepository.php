@@ -22,19 +22,16 @@ class BesoinRepository extends ServiceEntityRepository
     // /**
     //  * @return Besoin[] Returns an array of Besoin objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByEvent($id)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('b.evenement_id = :val')
+            ->setParameter('val', $id)
             ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Besoin

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\BesoinRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=BesoinRepository::class)
@@ -14,26 +16,31 @@ class Besoin
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"need:read","need:wright"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Evenement::class, inversedBy="besoins")
+     * @Groups({"need:read","need:wright"})
      */
     private $evenement_id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"need:read","need:wright"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"need:read","need:wright"})
      */
     private $quantite;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"need:read","need:wright"})
      */
     private $reste;
 
@@ -58,6 +65,8 @@ class Besoin
 
         return $this;
     }
+
+
 
     public function getNom(): ?string
     {

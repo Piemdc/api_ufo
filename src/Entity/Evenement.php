@@ -6,6 +6,9 @@ use App\Repository\EvenementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+
 
 /**
  * @ORM\Entity(repositoryClass=EvenementRepository::class)
@@ -16,32 +19,42 @@ class Evenement
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"evenement:read","evenement:wright"})
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="evenements")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="evenements", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * 
      */
     private $creator_id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups({"evenement:read","evenement:wright"})
+
      */
     private $nom;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"evenement:read","evenement:wright"})
+
      */
     private $icone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"evenement:read","evenement:wright"})
+
+
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"evenement:read","evenement:wright"})
      */
     private $date;
 
@@ -55,6 +68,12 @@ class Evenement
      */
     private $dispos;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"evenement:read","evenement:wright"})
+     */
+    private $details;
+
     public function __construct()
     {
         $this->besoins = new ArrayCollection();
@@ -65,6 +84,18 @@ class Evenement
     {
         return $this->id;
     }
+
+
+    /**
+     * @SerializedName("creator_id")
+     * @Groups({"evenement:read","evenement:wright"})
+     */
+    public function getSerializedCreator()
+    {
+
+        return $this->getCreatorId()->getId();
+    }
+
 
     public function getCreatorId(): ?User
     {
@@ -182,6 +213,18 @@ class Evenement
                 $dispo->setEvenementId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
 
         return $this;
     }
