@@ -16,9 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 
 class EventController extends AbstractController
 {
@@ -53,7 +50,7 @@ class EventController extends AbstractController
 
         $event = $serializer->deserialize($jsonpost, Evenement::class, 'json');
         $creator = json_decode($jsonpost)->creator;
-        $creator = $userRepository->findOneByID($creator);
+        $creator = $userRepository->findOneByUsername($creator);
         $event->setIcone(1);
         $event->setCreatorID($creator);
         $em->persist($event);

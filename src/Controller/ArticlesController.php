@@ -9,11 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
-
-
 class ArticlesController extends AbstractController
 {
     // Route de récupération des articles

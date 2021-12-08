@@ -11,18 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
-use App\Entity\Evenement;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
-
-
-
 
 class AccountController extends AbstractController
 {
@@ -31,9 +22,9 @@ class AccountController extends AbstractController
 
     public function user(UserRepository $userRepository, SerializerInterface $serializer, Request $request): Response
     {
-        $id = json_decode($request->getContent());
-        $id = $id->user;
-        $getuser = $userRepository->findOneByID($id);
+        $username = json_decode($request->getContent());
+        $username = $username->username;
+        $getuser = $userRepository->findOneByUsername($username);
         $user = $serializer->serialize($getuser, 'json',  ['groups' => 'user:read']);
 
 
@@ -69,11 +60,16 @@ class AccountController extends AbstractController
     }
 
     // Récupération de la liste des evenements 
-    #[Route('/api/eventlist/{id}', name: 'api_event_list', methods: ["GET", "POST"])]
+    #[Route('/api/eventlist', name: 'api_event_list', methods: ["GET", "POST"])]
 
-    public function eventslist(int $id, EvenementRepository $evenementRepository, SerializerInterface $serializer): Response
+    public function eventslist(UserRepository $userRepository, EvenementRepository $evenementRepository, SerializerInterface $serializer, Request $request): Response
     {
-        $getevent = $evenementRepository->findByCreatorID($id);
+
+        $username = json_decode($request->getContent());
+        $username = $username->username;
+        $getuser = $userRepository->findOneByUsername($username);
+        $userid = $getuser->getId();
+        $getevent = $evenementRepository->findByCreatorID($userid);
         $events = $serializer->serialize($getevent, 'json',  ['groups' => 'evenement:read']);
 
 

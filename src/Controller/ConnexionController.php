@@ -13,14 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
-
-
-
-
 class ConnexionController extends AbstractController
 {
 
@@ -54,7 +46,7 @@ class ConnexionController extends AbstractController
 
         return $this->json(
             [
-                'user' => $this->getUser()->getId()
+                'user' => $this->getUser()
             ]
         );
     }
